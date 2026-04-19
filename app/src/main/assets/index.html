@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vietlott Mega 6/45</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e8192c;--red-dark:#b5101e;--red-glow:rgba(232,25,44,0.35);--gold:#f5c842;--green:#22c97a;--blue:#3b82f6;--bg:#0e0e12;--bg2:#16161d;--bg3:#1e1e28;--text:#f0f0f5;--muted:#7a7a90;--border:rgba(255,255,255,0.07)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:8rem 1rem 4rem;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.6}
+body::after{content:'';position:fixed;top:-20%;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(232,25,44,0.12) 0%,transparent 70%);pointer-events:none;z-index:0}
+.container{position:relative;z-index:1;width:100%;max-width:700px}
+.header{text-align:center;margin-bottom:2rem}
+.header-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:8px;font-weight:600}
+.header h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,7vw,4rem);letter-spacing:.04em;line-height:1}
+.header h1 span{color:var(--red)}
+.header-sub{margin-top:6px;font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:5px;margin-bottom:1.5rem;justify-content:center;flex-wrap:wrap}
+.tab{padding:8px 16px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--muted);transition:all .2s;white-space:nowrap}
+.tab.active{background:var(--red);color:white;box-shadow:0 0 16px var(--red-glow)}
+.tab:hover:not(.active){color:var(--text);background:var(--bg3)}
+.machine{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:1.25rem;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.machine::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red),transparent)}
+.machine.gold-top::before{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.machine.green-top::before{background:linear-gradient(90deg,transparent,var(--green),transparent)}
+.machine.blue-top::before{background:linear-gradient(90deg,transparent,var(--blue),transparent)}
+.machine.teal-top::before{background:linear-gradient(90deg,transparent,#00c8c8,transparent)}
+.mtitle{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot-red{background:var(--red);box-shadow:0 0 6px var(--red)}
+.dot-gold{background:var(--gold);box-shadow:0 0 6px var(--gold)}
+.dot-green{background:var(--green);box-shadow:0 0 6px var(--green)}
+.dot-blue{background:var(--blue);box-shadow:0 0 6px var(--blue)}
+.dot-teal{background:#00c8c8;box-shadow:0 0 6px #00c8c8}
+.balls-grid{display:flex;flex-wrap:wrap;gap:7px}
+.ball{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative;user-select:none;flex-shrink:0}
+.ball::after{content:'';position:absolute;top:4px;left:7px;width:11px;height:6px;background:rgba(255,255,255,0.18);border-radius:50%;transform:rotate(-20deg)}
+.ball:hover{transform:scale(1.1)}
+.ball.hot{background:radial-gradient(circle at 35% 35%,#ff4d5e,var(--red-dark));color:white;box-shadow:0 2px 10px rgba(232,25,44,0.4)}
+.ball.medium{background:radial-gradient(circle at 35% 35%,#f5c842,#a07010);color:#1a1000;box-shadow:0 2px 10px rgba(245,200,66,0.35)}
+.ball.cold{background:radial-gradient(circle at 35% 35%,#555570,#2a2a40);color:#b0b0d0;border:1px solid rgba(255,255,255,0.08)}
+.ball.selected{transform:scale(1.15);box-shadow:0 0 18px var(--gold),0 0 36px rgba(245,200,66,0.3);outline:2px solid var(--gold)}
+.spin-btn{position:relative;padding:15px 44px;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.1em;background:var(--red);color:white;border:none;border-radius:14px;cursor:pointer;overflow:hidden;transition:transform .1s,box-shadow .2s;box-shadow:0 4px 24px var(--red-glow)}
+.spin-btn::before{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);transition:left .5s}
+.spin-btn:hover::before{left:150%}
+.spin-btn:hover{transform:translateY(-2px);box-shadow:0 6px 32px var(--red-glow),0 0 0 4px rgba(232,25,44,0.15)}
+.spin-btn:active{transform:scale(0.97)}
+.spin-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.spin-btn.green-btn{background:#1a7a4a;box-shadow:0 4px 20px rgba(34,201,122,0.3)}
+.spin-btn.green-btn:hover{box-shadow:0 6px 32px rgba(34,201,122,0.4)}
+.btn-sm{padding:7px 14px;font-size:12px;font-weight:500;border-radius:8px;cursor:pointer;transition:all .15s;border:1px solid var(--border);background:transparent;color:var(--muted)}
+.btn-sm:hover{background:var(--bg3);color:var(--text)}
+.btn-sm.primary{background:var(--red);border-color:var(--red);color:white}
+.btn-sm.primary:hover{opacity:.85}
+.btn-sm.success{background:#1a7a4a;border-color:#22c97a;color:#22c97a}
+.btn-sm.success:hover{opacity:.85}
+.btn-sm.teal{background:#006060;border-color:#00c8c8;color:#00c8c8}
+.btn-sm.teal:hover{opacity:.85}
+.result-panel{background:var(--bg3);border:1px solid var(--border);border-radius:18px;padding:1.25rem;display:none;position:relative;overflow:hidden}
+.result-panel.visible{display:block}
+.result-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.result-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.result-count{font-size:11px;color:var(--muted)}
+.result-balls{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
+.res-ball{width:66px;height:66px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;position:relative;animation:ballIn .4s cubic-bezier(.34,1.56,.64,1) both}
+.res-ball::after{content:'';position:absolute;top:6px;left:11px;width:16px;height:9px;background:rgba(255,255,255,0.2);border-radius:50%;transform:rotate(-20deg)}
+.res-ball.hot{background:radial-gradient(circle at 35% 35%,#ff4d5e,var(--red-dark));color:white;box-shadow:0 4px 18px rgba(232,25,44,0.5)}
+.res-ball.medium{background:radial-gradient(circle at 35% 35%,#f5c842,#a07010);color:#1a1000;box-shadow:0 4px 18px rgba(245,200,66,0.5)}
+.res-ball.cold{background:radial-gradient(circle at 35% 35%,#4a4a6a,#1e1e35);color:#c0c0e0;border:1px solid rgba(255,255,255,0.12)}
+.res-ball.smart{background:radial-gradient(circle at 35% 35%,#2ee89a,#0f6a42);color:#fff;box-shadow:0 4px 18px rgba(34,201,122,0.5)}
+@keyframes ballIn{from{transform:translateY(-28px) scale(0.5);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.result-legend{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.legend-dot{width:9px;height:9px;border-radius:50%}
+.legend-dot.hot{background:var(--red)}
+.legend-dot.medium{background:var(--gold)}
+.legend-dot.cold{background:#4a4a6a}
+.legend-dot.smart{background:var(--green)}
+.score-tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.stag{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:3px 8px;border-radius:5px;font-weight:600}
+.stag.ok{background:rgba(34,201,122,0.12);color:var(--green);border:1px solid rgba(34,201,122,0.25)}
+.stag.warn{background:rgba(245,200,66,0.12);color:var(--gold);border:1px solid rgba(245,200,66,0.25)}
+.counter-row{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
+.counter-card{flex:1;min-width:70px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:.65rem .75rem;text-align:center}
+.counter-num{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;line-height:1;margin-bottom:1px}
+.counter-num.red{color:var(--red)}
+.counter-num.gray{color:#666680}
+.counter-num.gold{color:var(--gold)}
+.counter-desc{font-size:10px;color:var(--muted)}
+.mode-panel{display:none}
+.mode-panel.active{display:block}
+.history-section{margin-top:1.25rem}
+.section-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;display:flex;align-items:center;justify-content:space-between}
+.history-list{display:flex;flex-direction:column;gap:7px}
+.history-item{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:.65rem 1rem;display:flex;align-items:center;gap:7px;flex-wrap:wrap;animation:fadeIn .3s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.history-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.history-num.hot{background:radial-gradient(circle at 35% 35%,#ff4d5e,var(--red-dark));color:white}
+.history-num.medium{background:radial-gradient(circle at 35% 35%,#f5c842,#a07010);color:#1a1000}
+.history-num.cold{background:#2a2a40;color:#9090b0;border:1px solid rgba(255,255,255,0.08)}
+.history-time{margin-left:auto;font-size:10px;color:var(--muted)}
+.stats-toolbar{display:flex;gap:7px;margin-bottom:.9rem;flex-wrap:wrap;align-items:center}
+.stats-info{font-size:11px;color:var(--muted);flex:1;min-width:100px}
+.stat-row{display:flex;align-items:center;gap:7px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+.stat-ball{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
+.stat-ball.hot{background:radial-gradient(circle at 35% 35%,#ff4d5e,#b5101e);color:white}
+.stat-ball.medium{background:radial-gradient(circle at 35% 35%,#f5c842,#a07010);color:#1a1000}
+.stat-ball.cold{background:radial-gradient(circle at 35% 35%,#4a4a6a,#1e1e35);color:#9090b0}
+.stat-bar-wrap{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;cursor:pointer}
+.stat-bar-fill{height:100%;border-radius:4px;transition:width .2s ease;pointer-events:none}
+.stat-freq-input{width:44px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:12px;font-weight:600;text-align:center;padding:3px;outline:none}
+.stat-freq-input:focus{border-color:var(--gold)}
+.stat-rank{font-size:10px;color:var(--muted);width:16px;text-align:right;flex-shrink:0}
+.threshold-row{display:flex;align-items:center;gap:8px;margin-bottom:.9rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.6rem 1rem;flex-wrap:wrap}
+.threshold-row label{font-size:11px;color:var(--muted)}
+.threshold-input{width:46px;background:var(--bg2);border:1px solid rgba(245,200,66,0.3);border-radius:6px;color:var(--gold);font-size:13px;font-weight:600;text-align:center;padding:3px;outline:none}
+.unsaved-badge{font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(245,200,66,0.12);color:var(--gold);border:1px solid rgba(245,200,66,0.25);display:none}
+.unsaved-badge.show{display:inline-block}
+.draws-grid{display:flex;flex-direction:column;gap:6px}
+.draw-row{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:7px 10px}
+.draw-row.today-row{border-color:rgba(0,200,200,0.4);background:rgba(0,200,200,0.05)}
+.draw-label{font-size:10px;color:var(--muted);width:28px;flex-shrink:0;font-weight:600}
+.draw-label.today-label{color:#00c8c8;font-size:9px;width:34px}
+.draw-inputs{display:flex;gap:5px;flex:1;flex-wrap:wrap}
+.draw-inp{width:38px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:12px;font-weight:600;text-align:center;padding:4px 2px;outline:none;transition:border-color .15s}
+.draw-inp:focus{border-color:var(--gold)}
+.draw-inp.filled{border-color:rgba(232,25,44,0.4);color:#ff8090}
+.draw-inp.err{border-color:rgba(232,25,44,0.8);background:rgba(232,25,44,0.08)}
+.absent-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:.5rem}
+.absent-ball{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;position:relative}
+.absent-ball::after{content:'';position:absolute;top:3px;left:6px;width:9px;height:5px;background:rgba(255,255,255,0.18);border-radius:50%;transform:rotate(-20deg)}
+.ab-0{background:radial-gradient(circle at 35% 35%,#ff4d5e,#b5101e);color:white}
+.ab-1{background:radial-gradient(circle at 35% 35%,#ff8c42,#a05020);color:white}
+.ab-2{background:radial-gradient(circle at 35% 35%,#f5c842,#a08020);color:#1a1000}
+.ab-3{background:radial-gradient(circle at 35% 35%,#555570,#2a2a40);color:#b0b0d0;border:1px solid rgba(255,255,255,0.08)}
+.absent-count{font-size:9px;position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);color:var(--muted);white-space:nowrap}
+.absent-wrap{position:relative;margin-bottom:18px}
+.criteria-list{display:flex;flex-direction:column;gap:6px;margin-bottom:1rem}
+.crit-row{display:flex;align-items:center;gap:8px;font-size:12px}
+.crit-icon{font-size:14px;width:20px;text-align:center}
+.toggle-switch{position:relative;display:inline-block;width:36px;height:20px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-track{position:absolute;inset:0;background:#333350;border-radius:20px;cursor:pointer;transition:background .2s}
+.toggle-track::before{content:'';position:absolute;width:14px;height:14px;left:3px;top:3px;background:white;border-radius:50%;transition:transform .2s}
+.toggle-switch input:checked+.toggle-track{background:var(--green)}
+.toggle-switch input:checked+.toggle-track::before{transform:translateX(16px)}
+.crit-label{color:var(--text);flex:1}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="header-eyebrow">● Mega 6/45 — Phân tích đa tiêu chí</div>
+    <h1>VIETLOTT<br><span>SỐ MAY MẮN</span></h1>
+    <div class="header-sub">Thống kê · Lịch sử kỳ quay · Quay thông minh · Ngưỡng ngọt: 5–10 kỳ vắng</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchMode('auto')">🎲 Quay thường</button>
+    <button class="tab" onclick="switchMode('smart')">🧠 Quay thông minh</button>
+    <button class="tab" onclick="switchMode('manual')">✋ Chọn tay</button>
+    <button class="tab" onclick="switchMode('stats')">📊 Thống kê</button>
+  </div>
+
+  <!-- AUTO -->
+  <div class="mode-panel active" id="panel-auto">
+    <div class="machine">
+      <div class="mtitle"><span class="dot dot-red"></span> Tỉ lệ Số nóng / Số trung bình / Số lạnh</div>
+      <div class="counter-row">
+        <div class="counter-card">
+          <div class="counter-num red" id="hot-count">3</div>
+          <div class="counter-desc">Số nóng</div>
+          <input type="range" min="0" max="6" value="3" id="hot-slider" oninput="updateSlider()" style="width:100%;margin-top:5px">
+        </div>
+        <div class="counter-card">
+          <div class="counter-num gold" id="med-count">2</div>
+          <div class="counter-desc">Số trung bình</div>
+          <input type="range" min="0" max="6" value="2" id="med-slider" oninput="updateSlider()" style="width:100%;margin-top:5px">
+        </div>
+        <div class="counter-card">
+          <div class="counter-num gray" id="cold-count">1</div>
+          <div class="counter-desc">Số lạnh</div>
+        </div>
+        <div class="counter-card">
+          <div class="counter-num" style="color:var(--text)">6</div>
+          <div class="counter-desc">Tổng</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);text-align:center" id="auto-group-info"></div>
+    </div>
+    <div class="machine gold-top" style="padding:.9rem 1.25rem">
+      <div class="mtitle"><span class="dot dot-gold"></span> Ràng buộc áp dụng</div>
+      <div class="criteria-list" style="margin-bottom:0">
+        <div class="crit-row"><div class="crit-icon">⚖️</div><div class="crit-label">Bắt buộc tổng 110–165</div></div>
+        <div class="crit-row"><div class="crit-icon">🔢</div><div class="crit-label">Bắt buộc 3 chẵn + 3 lẻ</div></div>
+        <div class="crit-row"><div class="crit-icon">🗺️</div><div class="crit-label">Bắt buộc trải đều 3 vùng: 1–15 · 16–30 · 31–45</div></div>
+        <div class="crit-row"><div class="crit-icon">🚫</div><div class="crit-label">Bắt buộc loại số ra 3 kỳ liên tiếp</div></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-bottom:1.25rem">
+      <button class="spin-btn" id="spin-btn" onclick="spinAuto()">🎰 QUAY NGAY</button>
+    </div>
+    <div class="result-panel" id="result-panel-auto">
+      <div class="result-header">
+        <div class="result-label">✨ Bộ số gợi ý</div>
+        <div class="result-count" id="result-count-auto"></div>
+      </div>
+      <div class="result-balls" id="result-balls-auto"></div>
+      <div class="result-legend">
+        <div class="legend-item"><div class="legend-dot hot"></div> Số nóng</div>
+        <div class="legend-item"><div class="legend-dot medium"></div> Số trung bình</div>
+        <div class="legend-item"><div class="legend-dot cold"></div> Số lạnh</div>
+      </div>
+    </div>
+    <div class="history-section" id="spin-history-section" style="display:none">
+      <div class="section-title"><span>Lịch sử quay</span><button class="btn-sm" onclick="clearSpinHistory()">Xóa</button></div>
+      <div class="history-list" id="spin-history-list"></div>
+    </div>
+  </div>
+
+  <!-- SMART -->
+  <div class="mode-panel" id="panel-smart">
+    <div class="machine blue-top">
+      <div class="mtitle"><span class="dot dot-blue"></span> Chiến lược đa tiêu chí</div>
+      <div class="criteria-list">
+        <div class="crit-row"><div class="crit-icon">🚫</div><div class="crit-label">Loại số ra liên tiếp 3 kỳ gần nhất — <span id="excluded-label" style="color:var(--gold)">đang tính...</span></div></div>
+        <div class="crit-row"><div class="crit-icon">⏳</div><div class="crit-label">Vắng 5–10 kỳ +24 · Vắng ≥11 kỳ +30 · Vắng 3–4 kỳ +12</div></div>
+        <div class="crit-row"><div class="crit-icon">⚖️</div><div class="crit-label">Tổng 6 số trong khoảng 110–165</div></div>
+        <div class="crit-row"><div class="crit-icon">🔢</div><div class="crit-label">3 số chẵn + 3 số lẻ</div></div>
+        <div class="crit-row"><div class="crit-icon">🗺️</div><div class="crit-label">Trải đều 3 vùng: 1–15 · 16–30 · 31–45</div></div>
+        <div class="crit-row"><div class="crit-icon">🎯</div><div class="crit-label">Bắt buộc có số trong vùng 1–9 và 40–45 <span id="edge-status" style="color:var(--muted)">(tắt)</span></div></div>
+      </div>
+      <div id="smart-draws-warning" style="font-size:11px;color:var(--gold);margin-bottom:.75rem;display:none">
+        ⚠️ Chưa có đủ dữ liệu kỳ quay — tiêu chí "vắng lâu" sẽ dùng tần suất thay thế.
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:.6rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.55rem 1rem">
+        <label class="toggle-switch">
+          <input type="checkbox" id="randomize-toggle">
+          <span class="toggle-track"></span>
+        </label>
+        <span style="font-size:12px;color:var(--muted)">Ngẫu nhiên hoá top 10 (xáo trộn rank tần suất)</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:.85rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.55rem 1rem">
+        <label class="toggle-switch">
+          <input type="checkbox" id="edge-toggle">
+          <span class="toggle-track"></span>
+        </label>
+        <span style="font-size:12px;color:var(--muted)">🎯 Bắt buộc có số trong vùng 1–9 và 40–45</span>
+      </div>
+
+      <!-- BẢNG MẬT ĐỘ KHOẢNG -->
+      <div style="margin-bottom:.85rem">
+        <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">📊 Mật độ xuất hiện theo khoảng (13 kỳ)</div>
+        <div id="density-table" style="display:flex;flex-direction:column;gap:4px"></div>
+      </div>
+
+      <div style="text-align:center">
+        <button class="spin-btn green-btn" id="smart-btn" onclick="spinSmart()">🧠 QUAY THÔNG MINH</button>
+      </div>
+    </div>
+    <div class="result-panel" id="result-panel-smart">
+      <div class="result-header">
+        <div class="result-label">🎯 Bộ số tối ưu</div>
+        <div class="result-count" id="result-count-smart"></div>
+      </div>
+      <div class="result-balls" id="result-balls-smart"></div>
+      <div class="score-tags" id="smart-score-tags"></div>
+    </div>
+    <div class="history-section" id="smart-history-section" style="display:none">
+      <div class="section-title"><span>Lịch sử quay thông minh</span><button class="btn-sm" onclick="clearSmartHistory()">Xóa</button></div>
+      <div class="history-list" id="smart-history-list"></div>
+    </div>
+  </div>
+
+  <!-- MANUAL -->
+  <div class="mode-panel" id="panel-manual">
+    <div class="machine">
+      <div class="mtitle"><span class="dot dot-red"></span> Số nóng — <span id="manual-hot-label"></span></div>
+      <div class="balls-grid" id="manual-hot"></div>
+    </div>
+    <div class="machine gold-top">
+      <div class="mtitle"><span class="dot dot-gold"></span> Số trung bình — <span id="manual-med-label"></span></div>
+      <div class="balls-grid" id="manual-med"></div>
+    </div>
+    <div class="machine">
+      <div class="mtitle"><span class="dot" style="background:#555570"></span> Số lạnh — <span id="manual-cold-label"></span></div>
+      <div class="balls-grid" id="manual-cold"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:.9rem;flex-wrap:wrap;align-items:center">
+      <div style="display:flex;align-items:center;gap:7px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:5px 11px">
+        <span style="font-size:11px;color:var(--muted)">Đã chọn:</span>
+        <span id="manual-selected-count" style="font-size:13px;font-weight:600;color:var(--gold)">0</span>
+        <span style="font-size:11px;color:var(--muted)">/ 6</span>
+      </div>
+      <button class="btn-sm" onclick="clearManual()">Xóa chọn</button>
+      <button class="spin-btn" style="padding:9px 22px;font-size:.95rem" onclick="confirmManual()">Xác nhận</button>
+    </div>
+    <div class="result-panel" id="result-panel-manual">
+      <div class="result-header"><div class="result-label">✨ Bộ số bạn chọn</div></div>
+      <div class="result-balls" id="result-balls-manual"></div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="mode-panel" id="panel-stats">
+
+    <!-- NHẬP KẾT QUẢ HÔM NAY -->
+    <div class="machine teal-top">
+      <div class="mtitle"><span class="dot dot-teal"></span> Kết quả hôm nay</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:.75rem">Nhập 6 số kết quả mới nhất → nhấn Áp dụng để đẩy vào Kỳ 1 và cộng tần suất.</div>
+      <div class="draw-row today-row" style="margin-bottom:0">
+        <div class="draw-label today-label">Hôm nay</div>
+        <div class="draw-inputs" id="today-inputs"></div>
+        <button class="btn-sm teal" onclick="applyToday()" style="white-space:nowrap;margin-left:4px">✓ Áp dụng</button>
+      </div>
+    </div>
+
+    <!-- 13 KỲ QUAY -->
+    <div class="machine gold-top">
+      <div class="mtitle">
+        <span class="dot dot-gold"></span>
+        Kết quả 13 kỳ quay gần nhất
+        <span class="unsaved-badge" id="draws-badge">● Chưa lưu</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:.75rem">Kỳ 1 = gần nhất. Mỗi kỳ nhập 6 số (1–45). Dùng Tab để di chuyển nhanh.</div>
+      <div class="draws-grid" id="draws-grid"></div>
+      <div style="display:flex;gap:7px;margin-top:.9rem;flex-wrap:wrap;align-items:center">
+        <button class="btn-sm" onclick="clearAllDraws()">Xóa trắng</button>
+        <button class="btn-sm success" onclick="saveDraws()">✓ Lưu kỳ quay</button>
+      </div>
+    </div>
+
+    <!-- VẮNG MẶT -->
+    <div class="machine green-top" id="absent-machine" style="display:none">
+      <div class="mtitle"><span class="dot dot-green"></span> Phân tích vắng mặt (13 kỳ gần nhất)</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:.75rem">
+        🔴 Vắng ≥13 kỳ (cực lạnh) &nbsp;|&nbsp; 🟠 Vắng 10–12 kỳ &nbsp;|&nbsp; 🟡 Vắng 5–10 kỳ (vùng phục hồi ★) &nbsp;|&nbsp; ⚫ Đã ra gần đây
+      </div>
+      <div class="absent-grid" id="absent-grid"></div>
+    </div>
+
+    <!-- TẦN SUẤT -->
+    <div class="machine">
+      <div class="mtitle">
+        <span class="dot dot-gold"></span>
+        Tần suất 45 số (1 năm) — Số nóng · Số trung bình · Số lạnh
+        <span class="unsaved-badge" id="unsaved-badge">● Chưa áp dụng</span>
+      </div>
+      <div class="threshold-row">
+        <label>Nóng: top</label>
+        <input type="number" class="threshold-input" id="threshold-hot" value="15" min="1" max="43" oninput="onThresholdChange()">
+        <label>🔴 · Trung bình đến</label>
+        <input type="number" class="threshold-input" id="threshold-med" value="30" min="2" max="44" oninput="onThresholdChange()">
+        <label>🟡 · Còn lại = lạnh ❄️</label>
+        <span style="font-size:10px;color:var(--muted)" id="threshold-desc"></span>
+      </div>
+      <div class="stats-toolbar">
+        <div class="stats-info">Nhấn thanh: +1 &nbsp;|&nbsp; Giữ thanh: −1… (giữ lâu = trừ nhiều) &nbsp;|&nbsp; Gõ trực tiếp</div>
+        <button class="btn-sm" onclick="resetStats()">↺ Gốc</button>
+        <button class="btn-sm primary" onclick="saveStats()">✓ Áp dụng</button>
+      </div>
+      <div id="stats-list" style="display:flex;flex-direction:column;gap:1px"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── VERSION STAMP ──
+const DATA_VERSION = '2026-04-19-v1'; // tăng version → force-reset localStorage
+
+const DEFAULT_DATA=[
+  {n:1,f:23},{n:2,f:33},{n:3,f:17},{n:4,f:24},
+  {n:5,f:28},{n:6,f:26},{n:7,f:32},{n:8,f:33},
+  {n:9,f:27},{n:10,f:30},{n:11,f:26},{n:12,f:26},
+  {n:13,f:25},{n:14,f:25},{n:15,f:22},{n:16,f:25},
+  {n:17,f:23},{n:18,f:23},{n:19,f:23},{n:20,f:30},
+  {n:21,f:19},{n:22,f:34},{n:23,f:30},{n:24,f:27},
+  {n:25,f:19},{n:26,f:29},{n:27,f:21},{n:28,f:39},
+  {n:29,f:32},{n:30,f:32},{n:31,f:33},{n:32,f:31},
+  {n:33,f:16},{n:34,f:28},{n:35,f:28},{n:36,f:30},
+  {n:37,f:26},{n:38,f:24},{n:39,f:20},{n:40,f:14},
+  {n:41,f:24},{n:42,f:38},{n:43,f:31},{n:44,f:31},
+  {n:45,f:35}
+];
+
+const DEFAULT_DRAWS=[
+  [1,10,19,31,36,38],   // kỳ 1 — 17/04/2026 #01498
+  [21,22,33,35,36,43],  // kỳ 2 — 15/04/2026 #01497
+  [1,10,11,32,39,42],   // kỳ 3 — 12/04/2026 #01496
+  [7,8,10,16,28,35],    // kỳ 4 — 10/04/2026 #01495
+  [5,8,23,26,38,41],    // kỳ 5 — 08/04/2026 #01494
+  [2,9,23,30,32,42],    // kỳ 6 — 05/04/2026 #01493
+  [2,4,23,24,35,41],    // kỳ 7 — 03/04/2026 #01492
+  [6,30,34,36,37,44],   // kỳ 8 — 01/04/2026 #01491
+  [5,8,18,30,37,45],    // kỳ 9 — 29/03/2026 #01490
+  [5,7,13,19,38,45],    // kỳ 10 — 27/03/2026 #01489
+  [16,22,24,29,35,36],  // kỳ 11 — 25/03/2026 #01488
+  [5,10,22,26,31,36],   // kỳ 12 — 22/03/2026 #01487
+  [8,11,22,23,38,43]    // kỳ 13 — 20/03/2026 #01486
+];
+
+const NUM_DRAWS=13;
+const NUM_PER_DRAW=6;
+const MAX_NUM=45;
+
+let workingData=DEFAULT_DATA.map(d=>({...d}));
+// hotTop: top N = số nóng; medTop: top N..M = số trung bình; rest = số lạnh
+let hotTop=15;
+let medTop=30;
+let hotCount=3;
+let medCount=2;
+let spinHistory=[];
+let smartHistory=[];
+let manualSelected=[];
+let draws=DEFAULT_DRAWS.map(r=>[...r]);
+
+function checkVersionReset(){
+  try{
+    const saved=localStorage.getItem('mega645_version');
+    if(saved!==DATA_VERSION){
+      localStorage.removeItem('mega645_data');
+      localStorage.removeItem('mega645_hotTop');
+      localStorage.removeItem('mega645_medTop');
+      localStorage.removeItem('mega645_draws');
+      localStorage.setItem('mega645_version',DATA_VERSION);
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
+
+function pad(n){return String(n).padStart(2,'0')}
+function getSorted(){return [...workingData].sort((a,b)=>b.f-a.f||a.n-b.n)}
+function getTier(n){
+  const sorted=getSorted();
+  const rank=sorted.findIndex(d=>d.n===n);
+  if(rank<hotTop) return 'hot';
+  if(rank<medTop) return 'warm';
+  return 'cold';
+}
+function getSortedRandomTop(){
+  const sorted=getSorted();
+  const top10=sorted.slice(0,10);
+  for(let i=top10.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [top10[i],top10[j]]=[top10[j],top10[i]];
+  }
+  return [...top10,...sorted.slice(10)];
+}
+function getHot(){return getSorted().slice(0,hotTop).map(d=>d.n)}
+function getMed(){return getSorted().slice(hotTop,medTop).map(d=>d.n)}
+function getCold(){return getSorted().slice(medTop).map(d=>d.n)}
+function getMaxF(){return Math.max(...workingData.map(d=>d.f))||1}
+
+function numClass(n){
+  const t=getTier(n);
+  if(t==='hot') return 'hot';
+  if(t==='warm') return 'medium';
+  return 'cold';
+}
+
+function pickRandom(arr,n){
+  const copy=[...arr],out=[];
+  for(let i=0;i<n&&copy.length;i++){const idx=Math.floor(Math.random()*copy.length);out.push(copy.splice(idx,1)[0])}
+  return out;
+}
+
+// Vùng 3 khu: 1-15, 16-30, 31-45
+function zone3(n){
+  if(n<=15) return 0;
+  if(n<=30) return 1;
+  return 2;
+}
+function isEven(n){return n%2===0}
+function sumArr(a){return a.reduce((s,v)=>s+v,0)}
+
+function calcAbsent(){
+  const absent={};
+  for(let n=1;n<=MAX_NUM;n++) absent[n]=NUM_DRAWS;
+  const validDraws=draws.filter(d=>d&&d.length===NUM_PER_DRAW);
+  validDraws.forEach((draw,kIdx)=>{
+    draw.forEach(n=>{
+      if(absent[n]===NUM_DRAWS) absent[n]=kIdx;
+    });
+  });
+  return absent;
+}
+function hasEnoughDraws(){
+  return draws.filter(d=>d&&d.length===NUM_PER_DRAW).length>=4;
+}
+
+// ── KẾT QUẢ HÔM NAY ──
+function buildTodayInputs(){
+  const el=document.getElementById('today-inputs');
+  el.innerHTML='';
+  for(let j=0;j<NUM_PER_DRAW;j++){
+    const inp=document.createElement('input');
+    inp.type='number';inp.className='draw-inp';
+    inp.min=1;inp.max=MAX_NUM;inp.placeholder='--';
+    inp.id='today-inp-'+j;
+    el.appendChild(inp);
+  }
+}
+
+function applyToday(){
+  const nums=[];
+  for(let j=0;j<NUM_PER_DRAW;j++){
+    const v=parseInt(document.getElementById('today-inp-'+j).value);
+    if(isNaN(v)||v<1||v>MAX_NUM){
+      showToast('⚠ Vui lòng nhập đủ 6 số hợp lệ (1–45)!');
+      return;
+    }
+    nums.push(v);
+  }
+  const unique=[...new Set(nums)];
+  if(unique.length!==NUM_PER_DRAW){
+    showToast('⚠ 6 số không được trùng nhau!');
+    return;
+  }
+  const sorted=unique.sort((a,b)=>a-b);
+  draws.unshift([...sorted]);
+  if(draws.length>NUM_DRAWS) draws.pop();
+  sorted.forEach(n=>{
+    const d=workingData.find(x=>x.n===n);
+    if(d) d.f+=1;
+  });
+  for(let j=0;j<NUM_PER_DRAW;j++) document.getElementById('today-inp-'+j).value='';
+  saveAll();
+  buildDrawsGrid();
+  buildAbsentGrid();
+  buildStats();
+  buildManualBalls();
+  updateSlider();
+  updateExcludedLabel();
+  buildDensityTable();
+  showToast('✓ Đã áp dụng kết quả hôm nay!');
+}
+
+function saveAll(){
+  try{
+    localStorage.setItem('mega645_data',JSON.stringify(workingData));
+    localStorage.setItem('mega645_hotTop',hotTop);
+    localStorage.setItem('mega645_medTop',medTop);
+    localStorage.setItem('mega645_draws',JSON.stringify(draws));
+    localStorage.setItem('mega645_version',DATA_VERSION);
+  }catch(e){}
+}
+
+// ── SCORE ──
+function scoreSet(nums){
+  let score=0;
+  const absent=calcAbsent();
+  const excluded=getRecentRepeat();
+  const sorted=getSorted();
+
+  // Ưu tiên 1: số bị cấm -999
+  nums.forEach(n=>{ if(excluded.has(n)) score-=999; });
+
+  // Ưu tiên 2: phân bổ 2 hot + 2 warm + 2 cold
+  let nHot=0,nWarm=0,nCold=0;
+  nums.forEach(n=>{
+    const t=getTier(n);
+    if(t==='hot') nHot++;
+    else if(t==='warm') nWarm++;
+    else nCold++;
+  });
+  if(nHot>=1&&nWarm>=1&&nCold>=1) score+=20;
+  else score-=20;
+
+  // Ưu tiên 3: vắng mặt
+  nums.forEach(n=>{
+    const ab=absent[n]||0;
+    if(ab>=5&&ab<=10) score+=24;
+    else if(ab>=3&&ab<=4) score+=12;
+    else if(ab>=11) score+=30;
+    else if(ab>=1&&ab<=2) score+=3;
+    else score-=3;
+  });
+
+  // Tần suất trong pool (top3 +40, top4-10 +28, ngoài +15)
+  const hotRanked=sorted.filter(d=>getTier(d.n)==='hot').map(d=>d.n);
+  const warmRanked=sorted.filter(d=>getTier(d.n)==='warm').map(d=>d.n);
+  const coldRanked=sorted.filter(d=>getTier(d.n)==='cold').map(d=>d.n);
+  nums.forEach(n=>{
+    const t=getTier(n);
+    const pool=t==='hot'?hotRanked:t==='warm'?warmRanked:coldRanked;
+    const rank=pool.indexOf(n);
+    if(rank<3) score+=40;
+    else if(rank<10) score+=28;
+    else score+=15;
+  });
+
+  // Tổng
+  const s=sumArr(nums);
+  if(s>=110&&s<=165) score+=30;
+  else if(s>=90&&s<=185) score+=12;
+  else score-=20;
+
+  // Chẵn/lẻ
+  const evens=nums.filter(n=>isEven(n)).length;
+  if(evens===3) score+=25;
+  else if(evens===2||evens===4) score+=10;
+  else score-=10;
+
+  // 3 vùng
+  const zones=[0,0,0];
+  nums.forEach(n=>zones[zone3(n)]++);
+  const minZone=Math.min(...zones);
+  if(minZone>=1) score+=20;
+  if(minZone>=2) score+=10;
+
+  // Mật độ khoảng: +20 cho mỗi số nằm trong khoảng có mật độ cao nhất
+  const densityData=calcDensity();
+  const validDraws=draws.filter(d=>d&&d.length===NUM_PER_DRAW);
+  if(validDraws.length>0){
+    const maxDensity=Math.max(...densityData.map(d=>parseFloat(d.density)||0));
+    const bestRange=densityData.find(d=>parseFloat(d.density)===maxDensity);
+    if(bestRange){
+      nums.forEach(n=>{ if(n>=bestRange.lo&&n<=bestRange.hi) score+=20; });
+    }
+  }
+
+  return score;
+}
+
+function buildScoredResult(nums){
+  const absent=calcAbsent();
+  const s=sumArr(nums);
+  const evens=nums.filter(n=>isEven(n)).length;
+  const zones=[0,0,0];
+  nums.forEach(n=>zones[zone3(n)]++);
+  const tags=[];
+  let nHot=0,nWarm=0,nCold=0;
+  nums.forEach(n=>{ const t=getTier(n); if(t==='hot') nHot++; else if(t==='warm') nWarm++; else nCold++; });
+  const hotCnt=nHot; const medCnt=nWarm; const coldCnt=nCold;
+  const sumOk=s>=110&&s<=165;
+  const evenOk=evens===3;
+  const zoneOk=Math.min(...zones)>=1;
+  const absentOk=nums.some(n=>{const ab=absent[n]||0;return ab>=5&&ab<=10;});
+  const distOk=nHot===2&&nWarm===2&&nCold===2;
+
+  const excluded=getRecentRepeat();
+  const hasExcluded=excluded.size>0;
+  const noneInResult=nums.every(n=>!excluded.has(n));
+  if(hasExcluded){
+    const exList=[...excluded].sort((a,b)=>a-b).map(n=>pad(n)).join(', ');
+    tags.push({ok:noneInResult,label:`🚫 Loại 3 kỳ liên tiếp: ${exList}`,sub:noneInResult?'✓ đã lọc':'⚠ còn số trùng'});
+  } else {
+    tags.push({ok:true,label:'🚫 Loại 3 kỳ liên tiếp',sub:'✓ không có số trùng'});
+  }
+  tags.push({ok:distOk,label:`🔥 ${hotCnt}N·${medCnt}W·${coldCnt}C`,sub:distOk?'✓ 2N-2W-2C':'⚠ lệch phân bổ'});
+  tags.push({ok:absentOk,label:'⏳ Vắng 5–10 kỳ',sub:absentOk?'✓ có số phục hồi':'⚠ ngoài vùng'});
+  tags.push({ok:sumOk,label:`⚖️ Tổng: ${s}`,sub:sumOk?'✓ 110–165':'⚠ ngoài khoảng'});
+  tags.push({ok:evenOk,label:`🔢 Chẵn/lẻ: ${evens}/${6-evens}`,sub:evenOk?'✓ cân bằng':'⚠ lệch'});
+  tags.push({ok:zoneOk,label:`🗺️ Vùng: ${zones.join('/')}`,sub:zoneOk?'✓ trải đều':'⚠ lệch vùng'});
+  return tags;
+}
+
+function updateSlider(){
+  let h=parseInt(document.getElementById('hot-slider').value);
+  let m=parseInt(document.getElementById('med-slider').value);
+  if(h+m>6){ m=6-h; document.getElementById('med-slider').value=m; }
+  hotCount=h; medCount=m;
+  const c=6-h-m;
+  document.getElementById('hot-count').textContent=h;
+  document.getElementById('med-count').textContent=m;
+  document.getElementById('cold-count').textContent=c<0?0:c;
+  const hot=getHot(),med=getMed(),cold=getCold();
+  document.getElementById('auto-group-info').textContent=`Nóng: ${hot.length} số · Trung bình: ${med.length} số · Lạnh: ${cold.length} số`;
+}
+
+function spinAuto(){
+  const btn=document.getElementById('spin-btn');
+  btn.disabled=true;btn.textContent='⏳ ĐANG QUAY...';
+  const panel=document.getElementById('result-panel-auto');
+  const rb=document.getElementById('result-balls-auto');
+  rb.innerHTML='';panel.classList.remove('visible');
+  const coldCount=Math.max(0,6-hotCount-medCount);
+  const hot=getHot(),med=getMed(),cold=getCold();
+  const excluded=getRecentRepeat();
+  // Thử tối đa 200 lần để thỏa ràng buộc cứng
+  let nums=null;
+  for(let attempt=0;attempt<200;attempt++){
+    const hotF=hot.filter(n=>!excluded.has(n));
+    const medF=med.filter(n=>!excluded.has(n));
+    const coldF=cold.filter(n=>!excluded.has(n));
+    const hPick=pickRandom(hotF,Math.min(hotCount,hotF.length));
+    const mPick=pickRandom(medF.filter(n=>!hPick.includes(n)),Math.min(medCount,medF.length));
+    const cPick=pickRandom(coldF.filter(n=>![...hPick,...mPick].includes(n)),Math.min(coldCount,coldF.length));
+    const candidate=[...hPick,...mPick,...cPick];
+    if(candidate.length!==6) continue;
+    const s=candidate.reduce((a,b)=>a+b,0);
+    const evens=candidate.filter(n=>n%2===0).length;
+    const z=[0,0,0]; candidate.forEach(n=>z[zone3(n)]++);
+    if(s>=110&&s<=165&&evens===3&&Math.min(...z)>=1) { nums=candidate.sort((a,b)=>a-b); break; }
+  }
+  // Fallback nếu không thỏa ràng buộc
+  if(!nums) nums=[...pickRandom(hot.filter(n=>!excluded.has(n)),hotCount),...pickRandom(med.filter(n=>!excluded.has(n)),medCount),...pickRandom(cold.filter(n=>!excluded.has(n)),coldCount)].sort((a,b)=>a-b);
+  renderBalls3(rb,nums,()=>{
+    panel.classList.add('visible');
+    document.getElementById('result-count-auto').textContent=`${hotCount} nóng · ${medCount} trung bình · ${coldCount} lạnh`;
+    btn.disabled=false;btn.textContent='🎰 QUAY LẠI';
+    addSpinHistory(nums);
+  });
+}
+
+function spinSmart(){
+  const btn=document.getElementById('smart-btn');
+  btn.disabled=true;btn.textContent='🔄 ĐANG TÍNH...';
+  const panel=document.getElementById('result-panel-smart');
+  const rb=document.getElementById('result-balls-smart');
+  rb.innerHTML='';panel.classList.remove('visible');
+  document.getElementById('smart-draws-warning').style.display=hasEnoughDraws()?'none':'block';
+  setTimeout(()=>{
+    // Sinh 600 ứng viên, xếp hạng, chọn ngẫu nhiên trong top 10
+    const allCandidates=[];
+    for(let i=0;i<600;i++){
+      const candidate=generateSmartCandidate();
+      const sc=scoreSet(candidate);
+      allCandidates.push({candidate,sc});
+    }
+    allCandidates.sort((a,b)=>b.sc-a.sc);
+    const picked=allCandidates[0];
+    const nums=picked.candidate.sort((a,b)=>a-b);
+    const tags=buildScoredResult(nums);
+    renderSmartBalls(rb,nums,()=>{
+      panel.classList.add('visible');
+      document.getElementById('result-count-smart').textContent=`Điểm: ${picked.sc} (top 10)`;
+      const tagsEl=document.getElementById('smart-score-tags');
+      tagsEl.innerHTML=tags.map(t=>`<div class="stag ${t.ok?'ok':'warn'}">${t.label} ${t.sub}</div>`).join('');
+      btn.disabled=false;btn.textContent='🧠 QUAY LẠI';
+      addSmartHistory(nums);
+    });
+  },100);
+}
+
+// Số ra liên tiếp 3 kỳ gần nhất — giao của k1 ∩ k2 ∩ k3
+function getRecentRepeat(){
+  const valid=draws.filter(d=>d&&d.length===NUM_PER_DRAW);
+  if(valid.length<3) return new Set();
+  const k1=new Set(valid[0]);
+  const k2=new Set(valid[1]);
+  const k3=new Set(valid[2]);
+  const repeat=new Set();
+  k1.forEach(n=>{ if(k2.has(n)&&k3.has(n)) repeat.add(n); });
+  return repeat;
+}
+
+function generateSmartCandidate(){
+  const absent=calcAbsent();
+  const excluded=getRecentRepeat();
+  // Switch: tắt = getSorted cố định, bật = getSortedRandomTop xáo top10
+  const useRandom=document.getElementById('randomize-toggle').checked;
+  const sortedR=useRandom?getSortedRandomTop():getSorted();
+
+  // Phân nhóm theo tier, loại số bị cấm
+  const hotNums=[],warmNums=[],coldNums=[];
+  sortedR.forEach(d=>{
+    if(excluded.has(d.n)) return;
+    const t=getTier(d.n);
+    if(t==='hot') hotNums.push(d.n);
+    else if(t==='warm') warmNums.push(d.n);
+    else coldNums.push(d.n);
+  });
+
+  // Nội suy tuyến tính tần suất trong pool: rank 0 → +15, rank cuối → +0
+  function freqScore(arr,idx){
+    if(arr.length<=1) return 18;
+    return Math.round(18*(1-idx/(arr.length-1)));
+  }
+
+  // Xây pool có trọng số thực sự: mảng {n, w}
+  function buildPool(arr, useFreq=true){
+    return arr.map((n,idx)=>{
+      const ab=absent[n]||0;
+      const wFreq=useFreq?freqScore(arr,idx):0;
+      let wAbs=0;
+      if(ab>=5&&ab<=10) wAbs=6;
+      else if(ab>=3&&ab<=4) wAbs=3;
+      else if(ab>=11) wAbs=8;
+      else if(ab>=1&&ab<=2) wAbs=1;
+      return {n, w:Math.max(1, wFreq+wAbs)};
+    });
+  }
+
+  const hotPool=buildPool(hotNums, true);
+  const warmPool=buildPool(warmNums, true);
+  const coldPool=buildPool(coldNums, false); // cold: chỉ dùng vắng
+
+  // Weighted random thật sự từ pool {n,w}, chọn k phần tử không lặp
+  function pickWR(pool, k){
+    if(pool.length<k) return null;
+    const out=[];
+    const rem=[...pool];
+    for(let i=0;i<k;i++){
+      const total=rem.reduce((s,x)=>s+x.w, 0);
+      if(total<=0) return null;
+      let r=Math.random()*total;
+      let idx=0;
+      for(;idx<rem.length-1;idx++){ r-=rem[idx].w; if(r<=0) break; }
+      out.push(rem[idx].n);
+      rem.splice(idx,1);
+    }
+    return out;
+  }
+
+  // 5 tỉ lệ hợp lệ: hot>=2, tổng=6
+  const ratios=[
+    [2,3,1],[2,2,2],[3,2,1],[3,1,2],[4,1,1]
+  ];
+
+  // Rút bằng weighted random thật sự, lọc qua điều kiện
+  for(let attempt=0;attempt<100;attempt++){
+    const [nh,nw,nc]=ratios[Math.floor(Math.random()*ratios.length)];
+    const hp=pickWR(hotPool,nh);
+    const wp=nw>0?pickWR(warmPool,nw):[];
+    const cp=nc>0?pickWR(coldPool,nc):[];
+    if(!hp||(nw>0&&!wp)||(nc>0&&!cp)) continue;
+    const s6=[...hp,...(wp||[]),...(cp||[])].sort((a,b)=>a-b);
+    if(new Set(s6).size!==6) continue;
+    const evens=s6.filter(n=>isEven(n)).length;
+    const zones=[0,0,0]; s6.forEach(n=>zones[zone3(n)]++);
+    const sum=sumArr(s6);
+    const okEven=(evens>=2&&evens<=4);
+    const okSum=(sum>=90&&sum<=185);
+    const okZone=Math.min(...zones)>=1;
+    const useEdge=document.getElementById('edge-toggle')?.checked;
+    const okEdge=!useEdge||(s6.some(n=>n>=1&&n<=9)&&s6.some(n=>n>=40&&n<=45));
+    if(okEven&&okSum&&okZone&&okEdge) return s6;
+  }
+  // Fallback
+  const allPool=[...hotPool,...warmPool,...coldPool];
+  return pickWR(allPool,6)||pickRandom([...Array(MAX_NUM)].map((_,i)=>i+1).filter(n=>!excluded.has(n)),6);
+}
+
+// ── DENSITY TABLE ──
+function calcDensity(){
+  const validDraws=draws.filter(d=>d&&d.length===NUM_PER_DRAW);
+  const ranges=[[1,9],[10,19],[20,29],[30,39],[40,45]];
+  return ranges.map(([lo,hi])=>{
+    const count=hi-lo+1;
+    let total=0;
+    validDraws.forEach(draw=>{
+      draw.forEach(n=>{ if(n>=lo&&n<=hi) total++; });
+    });
+    const density=validDraws.length>0?(total/count).toFixed(2):'-';
+    return {label:`${lo}–${hi}`,count,total,density,lo,hi};
+  });
+}
+
+function buildDensityTable(){
+  const el=document.getElementById('density-table');
+  if(!el) return;
+  const validDraws=draws.filter(d=>d&&d.length===NUM_PER_DRAW);
+  if(validDraws.length===0){
+    el.innerHTML='<div style="font-size:11px;color:var(--muted)">Chưa có dữ liệu kỳ quay.</div>';
+    return;
+  }
+  const data=calcDensity();
+  const maxDensity=Math.max(...data.map(d=>parseFloat(d.density)||0));
+  el.innerHTML=data.map(d=>{
+    const pct=maxDensity>0?((parseFloat(d.density)/maxDensity)*100).toFixed(0):0;
+    const isMax=parseFloat(d.density)===maxDensity;
+    return `<div style="display:flex;align-items:center;gap:8px;font-size:11px">
+      <span style="width:44px;color:var(--muted);flex-shrink:0">${d.label}</span>
+      <div style="flex:1;height:7px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${isMax?'var(--gold)':'var(--blue)'};border-radius:4px;transition:width .3s"></div>
+      </div>
+      <span style="width:48px;text-align:right;font-weight:600;color:${isMax?'var(--gold)':'var(--text)'}">${d.density}</span>
+      <span style="width:36px;text-align:right;font-size:10px;color:var(--muted)">${d.total}/${d.count*validDraws.length}</span>
+    </div>`;
+  }).join('');
+}
+
+function pickWeighted(pool,n){
+  if(pool.length===0) return null;
+  const out=[];
+  const seen=new Set();
+  let tries=0;
+  while(out.length<n&&tries<1000){
+    tries++;
+    const idx=Math.floor(Math.random()*pool.length);
+    const v=pool[idx];
+    if(!seen.has(v)){seen.add(v);out.push(v);}
+  }
+  return out.length===n?out:null;
+}
+
+// Render 3-class balls (hot/medium/cold) sequentially
+function renderBalls3(container,nums,onDone){
+  let delay=0;
+  nums.forEach((n,i)=>{
+    setTimeout(()=>{
+      const cls=numClass(n);
+      const ball=document.createElement('div');
+      ball.className=`res-ball ${cls}`;
+      ball.textContent=pad(n);
+      container.appendChild(ball);
+      if(i===nums.length-1) onDone();
+    },delay);
+    delay+=160;
+  });
+}
+
+// Render bóng quay thông minh theo tier (hot=red / warm=gold / cold=gray)
+function renderSmartBalls(container,nums,onDone){
+  let delay=0;
+  nums.forEach((n,i)=>{
+    setTimeout(()=>{
+      const t=getTier(n);
+      const cls=t==='hot'?'hot':t==='warm'?'medium':'cold';
+      const ball=document.createElement('div');
+      ball.className=`res-ball ${cls}`;
+      ball.textContent=pad(n);
+      container.appendChild(ball);
+      if(i===nums.length-1) onDone();
+    },delay);
+    delay+=160;
+  });
+}
+
+function renderBallsSequential(container,nums,hotArr,hotCls,coldCls,onDone){
+  let delay=0;
+  nums.forEach((n,i)=>{
+    setTimeout(()=>{
+      const cls=hotArr?(hotArr.includes(n)?hotCls:coldCls):hotCls;
+      const ball=document.createElement('div');
+      ball.className=`res-ball ${cls}`;
+      ball.textContent=pad(n);
+      container.appendChild(ball);
+      if(i===nums.length-1) onDone();
+    },delay);
+    delay+=160;
+  });
+}
+
+function addSpinHistory(nums){
+  const now=new Date();
+  const time=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  spinHistory.unshift({nums,time});
+  if(spinHistory.length>5)spinHistory.pop();
+  renderSpinHistory();
+  document.getElementById('spin-history-section').style.display='block';
+}
+function renderSpinHistory(){
+  document.getElementById('spin-history-list').innerHTML=spinHistory.map(h=>`
+    <div class="history-item">
+      ${h.nums.map(n=>`<div class="history-num ${numClass(n)}">${pad(n)}</div>`).join('')}
+      <div class="history-time">${h.time}</div>
+    </div>`).join('');
+}
+function clearSpinHistory(){
+  spinHistory=[];
+  document.getElementById('spin-history-section').style.display='none';
+  document.getElementById('spin-history-list').innerHTML='';
+}
+function addSmartHistory(nums){
+  const now=new Date();
+  const time=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  smartHistory.unshift({nums,time});
+  if(smartHistory.length>5)smartHistory.pop();
+  renderSmartHistory();
+  document.getElementById('smart-history-section').style.display='block';
+}
+function renderSmartHistory(){
+  document.getElementById('smart-history-list').innerHTML=smartHistory.map(h=>`
+    <div class="history-item">
+      ${h.nums.map(n=>`<div class="history-num" style="background:radial-gradient(circle at 35% 35%,#2ee89a,#0f6a42);color:white">${pad(n)}</div>`).join('')}
+      <div class="history-time">${h.time}</div>
+    </div>`).join('');
+}
+function clearSmartHistory(){
+  smartHistory=[];
+  document.getElementById('smart-history-section').style.display='none';
+  document.getElementById('smart-history-list').innerHTML='';
+}
+
+function buildManualBalls(){
+  const hot=getHot().sort((a,b)=>a-b);
+  const med=getMed().sort((a,b)=>a-b);
+  const cold=getCold().sort((a,b)=>a-b);
+  document.getElementById('manual-hot-label').textContent=`top ${hotTop} số`;
+  document.getElementById('manual-med-label').textContent=`${medTop-hotTop} số`;
+  document.getElementById('manual-cold-label').textContent=`${MAX_NUM-medTop} số còn lại`;
+  const hotEl=document.getElementById('manual-hot');
+  const medEl=document.getElementById('manual-med');
+  const coldEl=document.getElementById('manual-cold');
+  hotEl.innerHTML='';medEl.innerHTML='';coldEl.innerHTML='';
+  hot.forEach(n=>hotEl.appendChild(makeMBall(n,'hot')));
+  med.forEach(n=>medEl.appendChild(makeMBall(n,'medium')));
+  cold.forEach(n=>coldEl.appendChild(makeMBall(n,'cold')));
+  manualSelected.forEach(n=>document.getElementById('mball-'+n)?.classList.add('selected'));
+}
+function makeMBall(n,cls){
+  const b=document.createElement('div');
+  b.className=`ball ${cls}`;b.id=`mball-${n}`;
+  b.textContent=pad(n);
+  b.onclick=()=>toggleManual(n,b);
+  return b;
+}
+function toggleManual(n,el){
+  const idx=manualSelected.indexOf(n);
+  if(idx>=0){manualSelected.splice(idx,1);el.classList.remove('selected')}
+  else{if(manualSelected.length>=6)return;manualSelected.push(n);el.classList.add('selected')}
+  document.getElementById('manual-selected-count').textContent=manualSelected.length;
+}
+function clearManual(){
+  manualSelected.forEach(n=>document.getElementById('mball-'+n)?.classList.remove('selected'));
+  manualSelected=[];
+  document.getElementById('manual-selected-count').textContent=0;
+  document.getElementById('result-panel-manual').classList.remove('visible');
+}
+function confirmManual(){
+  if(manualSelected.length!==6){alert('Hãy chọn đúng 6 số!');return}
+  const nums=[...manualSelected].sort((a,b)=>a-b);
+  document.getElementById('result-balls-manual').innerHTML=nums.map(n=>`<div class="res-ball ${numClass(n)}">${pad(n)}</div>`).join('');
+  document.getElementById('result-panel-manual').classList.add('visible');
+}
+
+function buildDrawsGrid(){
+  const container=document.getElementById('draws-grid');
+  container.innerHTML='';
+  for(let k=0;k<NUM_DRAWS;k++){
+    const row=document.createElement('div');
+    row.className='draw-row';
+    row.innerHTML=`<div class="draw-label">Kỳ ${k+1}</div><div class="draw-inputs" id="draw-inputs-${k}"></div>`;
+    container.appendChild(row);
+    const inputsEl=document.getElementById(`draw-inputs-${k}`);
+    for(let j=0;j<NUM_PER_DRAW;j++){
+      const inp=document.createElement('input');
+      inp.type='number';inp.className='draw-inp';
+      inp.min=1;inp.max=MAX_NUM;inp.placeholder='--';
+      inp.id=`dinp-${k}-${j}`;
+      const saved=draws[k]&&draws[k][j];
+      if(saved){inp.value=saved;inp.classList.add('filled');}
+      inp.oninput=()=>onDrawInput(k,j,inp);
+      inputsEl.appendChild(inp);
+    }
+  }
+}
+
+function onDrawInput(k,j,inp){
+  const v=parseInt(inp.value);
+  inp.classList.remove('filled','err');
+  if(inp.value===''){
+    if(!draws[k]) draws[k]=[];
+    draws[k][j]=0;
+  } else if(isNaN(v)||v<1||v>MAX_NUM){
+    inp.classList.add('err');
+  } else {
+    if(!draws[k]) draws[k]=[];
+    draws[k][j]=v;
+    inp.classList.add('filled');
+  }
+  document.getElementById('draws-badge').classList.add('show');
+}
+
+function clearAllDraws(){
+  draws=[];
+  buildDrawsGrid();
+  document.getElementById('draws-badge').classList.add('show');
+}
+
+function saveDraws(){
+  const cleaned=[];
+  for(let k=0;k<NUM_DRAWS;k++){
+    const row=draws[k]||[];
+    const nums=row.filter(v=>v&&v>=1&&v<=MAX_NUM);
+    const unique=[...new Set(nums)];
+    if(unique.length===NUM_PER_DRAW){
+      cleaned.push(unique);
+    } else {
+      cleaned.push(null);
+    }
+  }
+  draws=cleaned;
+  saveAll();
+  document.getElementById('draws-badge').classList.remove('show');
+  buildAbsentGrid();
+  updateExcludedLabel();
+  buildDensityTable();
+  showToast(`✓ Đã lưu ${draws.filter(d=>d).length}/${NUM_DRAWS} kỳ quay!`);
+}
+
+function buildAbsentGrid(){
+  const validDraws=draws.filter(d=>d&&d.length===NUM_PER_DRAW);
+  const machine=document.getElementById('absent-machine');
+  if(validDraws.length===0){machine.style.display='none';return;}
+  machine.style.display='block';
+  const absent=calcAbsent();
+  const container=document.getElementById('absent-grid');
+  container.innerHTML='';
+  const sorted=[...Array(MAX_NUM)].map((_,i)=>i+1).sort((a,b)=>absent[b]-absent[a]);
+  sorted.forEach(n=>{
+    const ab=absent[n];
+    const wrap=document.createElement('div');
+    wrap.className='absent-wrap';
+    let cls='ab-3';
+    if(ab>=NUM_DRAWS) cls='ab-0';
+    else if(ab>=10) cls='ab-1';
+    else if(ab>=4) cls='ab-2';
+    wrap.innerHTML=`<div class="absent-ball ${cls}">${pad(n)}<span class="absent-count">${ab===NUM_DRAWS?'13+':ab+'k'}</span></div>`;
+    container.appendChild(wrap);
+  });
+}
+
+function onThresholdChange(){
+  let h=parseInt(document.getElementById('threshold-hot').value)||15;
+  let m=parseInt(document.getElementById('threshold-med').value)||30;
+  h=Math.min(43,Math.max(1,h));
+  if(m<=h) m=h+1;
+  m=Math.min(44,m);
+  hotTop=h; medTop=m;
+  document.getElementById('threshold-hot').value=h;
+  document.getElementById('threshold-med').value=m;
+  document.getElementById('threshold-desc').textContent=`🔴 ${h}  🟡 ${m-h}  ❄️ ${MAX_NUM-m}`;
+  document.getElementById('unsaved-badge').classList.add('show');
+  refreshStatDisplay();
+}
+
+function getBarColor(rank){
+  if(rank<hotTop) return 'var(--red)';
+  if(rank<medTop) return 'var(--gold)';
+  return '#444460';
+}
+function getBallClass(rank){
+  if(rank<hotTop) return 'hot';
+  if(rank<medTop) return 'medium';
+  return 'cold';
+}
+
+function buildStats(){
+  const sorted=getSorted();
+  const maxF=getMaxF();
+  const container=document.getElementById('stats-list');
+  container.innerHTML='';
+  document.getElementById('threshold-desc').textContent=`🔴 ${hotTop}  🟡 ${medTop-hotTop}  ❄️ ${MAX_NUM-medTop}`;
+  for(let n=1;n<=MAX_NUM;n++){
+    const d=workingData.find(x=>x.n===n);
+    if(!d) continue;
+    const rank=sorted.findIndex(x=>x.n===n);
+    const cls=getBallClass(rank);
+    const pct=(d.f/maxF*100).toFixed(1);
+    const row=document.createElement('div');
+    row.className='stat-row';row.id='srow-'+d.n;
+    row.innerHTML=`
+      <div class="stat-rank" id="srank-${d.n}">${rank+1}</div>
+      <div class="stat-ball ${cls}" id="sball-${d.n}">${pad(d.n)}</div>
+      <div class="stat-bar-wrap" id="sbar-${d.n}" title="+1 | Giữ: -1 (giữ lâu = trừ nhiều)">
+        <div class="stat-bar-fill" id="sfill-${d.n}" style="width:${pct}%;background:${getBarColor(rank)}"></div>
+      </div>
+      <input type="number" class="stat-freq-input" id="sinput-${d.n}" value="${d.f}" min="0" max="999"
+        oninput="freqChange(${d.n},this.value)" onfocus="this.select()">
+    `;
+    container.appendChild(row);
+    attachBarEvents(row.querySelector('.stat-bar-wrap'), n);
+  }
+}
+
+function attachBarEvents(el, n){
+  if(!el) return;
+  let holdTimer=null,holdStart=0,holdInterval=null,didHold=false;
+  function startHold(e){
+    e.preventDefault();didHold=false;holdStart=Date.now();
+    holdTimer=setTimeout(()=>{
+      didHold=true;
+      let speed=400;
+      function doSubtract(){
+        const d=workingData.find(x=>x.n===n);
+        if(d){d.f=Math.max(0,d.f-1);const inp=document.getElementById('sinput-'+n);if(inp)inp.value=d.f;document.getElementById('unsaved-badge').classList.add('show');refreshStatDisplay();}
+        speed=Math.max(60,400-Math.floor((Date.now()-holdStart)/500)*40);
+        holdInterval=setTimeout(doSubtract,speed);
+      }
+      doSubtract();
+    },300);
+  }
+  function endHold(){
+    clearTimeout(holdTimer);clearTimeout(holdInterval);holdTimer=null;holdInterval=null;
+    if(!didHold){const d=workingData.find(x=>x.n===n);if(d){d.f=d.f+1;const inp=document.getElementById('sinput-'+n);if(inp)inp.value=d.f;document.getElementById('unsaved-badge').classList.add('show');refreshStatDisplay();}}
+    didHold=false;
+  }
+  function cancelHold(){clearTimeout(holdTimer);clearTimeout(holdInterval);holdTimer=null;holdInterval=null;didHold=true;}
+  el.addEventListener('mousedown',startHold);
+  el.addEventListener('mouseup',endHold);
+  el.addEventListener('mouseleave',cancelHold);
+  el.addEventListener('touchstart',startHold,{passive:false});
+  el.addEventListener('touchend',endHold);
+  el.addEventListener('touchcancel',cancelHold);
+}
+
+function refreshStatDisplay(){
+  const sorted=getSorted();
+  const maxF=getMaxF();
+  sorted.forEach((d,i)=>{
+    const cls=getBallClass(i);
+    const pct=(d.f/maxF*100).toFixed(1);
+    const fill=document.getElementById('sfill-'+d.n);
+    if(fill){fill.style.width=pct+'%';fill.style.background=getBarColor(i);}
+    document.getElementById('sball-'+d.n)?.setAttribute('class',`stat-ball ${cls}`);
+    const rank=document.getElementById('srank-'+d.n);
+    if(rank) rank.textContent=i+1;
+    const inp=document.getElementById('sinput-'+d.n);
+    if(inp&&document.activeElement!==inp) inp.value=d.f;
+  });
+}
+
+function freqChange(n,val){
+  const d=workingData.find(x=>x.n===n);
+  if(!d) return;
+  const v=parseInt(val);
+  if(!isNaN(v)&&v>=0) d.f=v;
+  document.getElementById('unsaved-badge').classList.add('show');
+  refreshStatDisplay();
+}
+
+function saveStats(){
+  document.getElementById('unsaved-badge').classList.remove('show');
+  saveAll();
+  buildManualBalls();updateSlider();
+  renderSpinHistory();renderSmartHistory();
+  showToast('✓ Đã lưu & áp dụng tần suất!');
+}
+
+function resetStats(){
+  workingData=DEFAULT_DATA.map(d=>({...d}));
+  draws=DEFAULT_DRAWS.map(r=>[...r]);
+  hotTop=15; medTop=30;
+  document.getElementById('threshold-hot').value=15;
+  document.getElementById('threshold-med').value=30;
+  saveAll();
+  buildStats();
+  buildDrawsGrid();
+  buildAbsentGrid();
+  document.getElementById('unsaved-badge').classList.remove('show');
+  buildManualBalls();updateSlider();
+  updateExcludedLabel();
+  showToast('↺ Đã đặt lại về số liệu gốc!');
+}
+
+function loadSaved(){
+  const wasReset=checkVersionReset();
+  if(wasReset) return;
+  try{
+    const sd=localStorage.getItem('mega645_data');
+    const sh=localStorage.getItem('mega645_hotTop');
+    const sm=localStorage.getItem('mega645_medTop');
+    const sdr=localStorage.getItem('mega645_draws');
+    if(sd){const p=JSON.parse(sd);if(Array.isArray(p)&&p.length===45) workingData=p;}
+    if(sh){const t=parseInt(sh);if(t>=1&&t<=43){hotTop=t;document.getElementById('threshold-hot').value=t;}}
+    if(sm){const t=parseInt(sm);if(t>=2&&t<=44){medTop=t;document.getElementById('threshold-med').value=t;}}
+    if(sdr){const p=JSON.parse(sdr);if(Array.isArray(p)) draws=p;}
+    if(sd||sdr) showToast('📂 Đã tải dữ liệu đã lưu!');
+  }catch(e){}
+}
+
+function updateEdgeStatus(){
+  const el=document.getElementById('edge-status');
+  if(!el) return;
+  const on=document.getElementById('edge-toggle')?.checked;
+  el.textContent=on?'(bật)':'(tắt)';
+  el.style.color=on?'var(--gold)':'var(--muted)';
+}
+
+function updateExcludedLabel(){
+  const el=document.getElementById('excluded-label');
+  if(!el) return;
+  const ex=getRecentRepeat();
+  if(ex.size===0){
+    el.textContent='không có số trùng';
+    el.style.color='var(--muted)';
+  } else {
+    el.textContent='loại: '+[...ex].sort((a,b)=>a-b).map(n=>pad(n)).join(', ');
+    el.style.color='var(--gold)';
+  }
+}
+
+function switchMode(mode){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['auto','smart','manual','stats'][i]===mode));
+  document.querySelectorAll('.mode-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+mode).classList.add('active');
+  if(mode==='manual') buildManualBalls();
+}
+
+function showToast(msg){
+  let t=document.getElementById('toast');
+  if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--gold);color:#1a1000;font-size:12px;font-weight:600;padding:9px 20px;border-radius:9px;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap';document.body.appendChild(t)}
+  t.textContent=msg;t.style.opacity='1';
+  clearTimeout(t._to);t._to=setTimeout(()=>t.style.opacity='0',2500);
+}
+
+loadSaved();
+buildTodayInputs();
+updateSlider();
+buildManualBalls();
+buildStats();
+buildDrawsGrid();
+buildAbsentGrid();
+buildDensityTable();
+updateExcludedLabel();
+updateEdgeStatus();
+document.getElementById('edge-toggle')?.addEventListener('change',updateEdgeStatus);
+</script>
+</body>
+</html>
